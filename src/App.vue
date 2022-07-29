@@ -1,5 +1,6 @@
 <template>
   <ion-app>
+    <home-page></home-page>
     <ion-split-pane content-id="main-content">
       <ion-menu content-id="main-content" type="overlay">
         <ion-content>
@@ -33,7 +34,7 @@
 <script>
 import { IonApp, IonContent, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonMenu, IonMenuToggle, IonNote, IonRouterOutlet, IonSplitPane } from '@ionic/vue';
 import { defineComponent, ref } from 'vue';
-// import { useRoute } from 'vue-router';
+//import { useRoute } from 'vue-router';
 import { archiveOutline, archiveSharp, bookmarkOutline, bookmarkSharp, heartOutline, heartSharp, mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, trashOutline, trashSharp, warningOutline, warningSharp } from 'ionicons/icons';
 
 export default defineComponent({
@@ -99,7 +100,7 @@ export default defineComponent({
       selectedIndex.value = appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
     }
     
-   // const route = useRoute();
+    //const route = useRoute();
     
     return { 
       selectedIndex,
@@ -119,7 +120,7 @@ export default defineComponent({
       trashSharp, 
       warningOutline, 
       warningSharp,
-      // isSelected: (url: string) => url === route.path ? 'selected' : ''
+      //isSelected: (url: string) => url === route.path ? 'selected' : ''
     }
   }
 });
