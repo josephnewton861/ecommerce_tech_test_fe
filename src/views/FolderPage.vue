@@ -13,18 +13,21 @@
     <ion-content :fullscreen="true">
       <ion-header collapse="condense">
         <ion-toolbar>
+          <!-- <ion-back-button></ion-back-button> -->
           <ion-title size="large">{{ $route.params.id }}</ion-title>
         </ion-toolbar>
       </ion-header>
     </ion-content>
-    <home-page></home-page>
+    <!-- <home-page></home-page>
+    <single-product></single-product> -->
   </ion-page>
 </template>
 
 <script>
 import { defineComponent } from 'vue';
 import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
-import HomePage from './HomePage'
+// import HomePage from './HomePage'
+// import SingleProduct from './HomePage'
 
 export default defineComponent({
   name: 'FolderPage',
@@ -36,7 +39,8 @@ export default defineComponent({
     IonPage,
     IonTitle,
     IonToolbar,
-    HomePage
+    // HomePage,
+    // SingleProduct
   }
 });
 </script>

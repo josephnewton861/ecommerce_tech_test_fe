@@ -24,6 +24,21 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import {fas} from '@fortawesome/free-solid-svg-icons'
 library.add(fas);
 
+import FolderPage from './views/FolderPage'
+
+import store from '../src/store/basket'
+// removeDoubleQuotes(imgUrl) {
+//   return imgUrl.replace(/['"]+/g, '');
+// },
+// cosnt formatDate = (date) => {
+//      let month = date.getMonth() + 1;
+//       if (month < 10) {
+//           month = `0${month}`
+//       }
+//       let year = date.getFullYear()
+//       let newDate = date.getDate();
+//       return `${year}-${month}-${newDate}`
+// }
 
 /* Theme variables */
 import './theme/variables.css';
@@ -31,8 +46,10 @@ import './theme/variables.css';
 const app = createApp(App)
   .use(IonicVue)
   .use(router)
-  .component('fa', FontAwesomeIcon);
-  
+  .use(store)
+  .component('fa', FontAwesomeIcon)
+
+  app.component('folder-page', FolderPage)
 router.isReady().then(() => {
   app.mount('#app');
 });

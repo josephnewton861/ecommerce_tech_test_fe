@@ -1,6 +1,6 @@
 <template>
   <ion-page class="page_container">
-    <!-- <folder-page></folder-page> -->
+    <folder-page></folder-page>
     <h1 style="margin-top: 5rem">Hello world</h1>
     <touch-slider :format-products-by-category="formatProductsByCategory"></touch-slider>
   </ion-page>
