@@ -1,7 +1,6 @@
 <template>
     <ion-page>
-        <folder-page></folder-page>
-        <h1>Here</h1>
+        <folder-page :basket-count="basketCount"></folder-page>
         <ion-content class="content" v-if="product">
             <!-- <ion-buttons style="margin-top: 7rem">
                 <ion-back-button></ion-back-button>
@@ -28,6 +27,8 @@
                     </ion-text>
                 </ion-item-divider> 
                 <ion-button v-if="selectedSize" @click="addProductToBasket(product)" >Add to basket</ion-button>
+                <ion-text v-if="duplicateMsg">{{duplicateMsg}}</ion-text>
+                <ion-text v-else-if="successMsg">{{successMsg}}</ion-text>
             </ion-item-divider>
 
              <ion-header>
@@ -79,6 +80,10 @@ import {
     IonHeader
     } from '@ionic/vue';
 import axios from 'axios'
+// import {useCounterStore} from '../store/basket'
+
+
+
 
 export default {
   name: 'SingleProduct',
@@ -99,6 +104,8 @@ export default {
   mounted() {
     this.selectedCategory = this.$route.params.category
     this.selectedSlug = this.$route.params.slug
+    
+
 
     //console.log(this.$store.state.basket, 'basket')
 
@@ -119,14 +126,22 @@ export default {
       selectedCategory: null,
       selectedSlug: null,
       product: null,
+      test: null,
       selectedSize: null,
       productsByCategory: null,
+      duplicateMsg: '',
+      successMsg: '',
+      basketCount: 0,
     }
   },
   methods: {
     removeDoubleQuotes(imgUrl) {
         return imgUrl.replace(/['"]+/g, '');
     },
+    // triggerCounterStore() {
+    //     this.test = this.();
+
+    // },
     formatDate(date) {
         let newDate = new Date(date);
           let options = {
@@ -138,6 +153,7 @@ export default {
 
         return formattedDate
     },
+   
     getSimilarProducts() {
         axios.get(`https://ecommerce-application-joen.herokuapp.com/api/products/${this.product.category}`, {
           })
@@ -151,9 +167,33 @@ export default {
         })
     },
     addProductToBasket(product) {
-        this.$store._mutations['addProductToStoreBasket'][0]({product: product, size: this.selectedSize})
-        //.addProductToStoreBasket(product, size)
-        //this.$state.store.addProductToStoreBasket(product, size);
+        this.duplicateMsg = '';
+        this.successMsg = '';
+        let duplicate = false;
+        let basket = [];
+
+        product.chosenSize = this.selectedSize;
+
+        basket = JSON.parse(localStorage.getItem('basket')) || [];
+
+        basket.forEach((item) => {
+            if (JSON.stringify(product) === JSON.stringify(item)) {
+                duplicate = true;
+                this.duplicateMsg = 'Duplicate item cannot be added to your basket'
+                setTimeout(() => {
+                    this.duplicateMsg = ''
+                }, 5000)
+            }
+        })
+        if(!duplicate) {
+            basket.push(product);
+            localStorage.setItem('basket', JSON.stringify(basket));
+            this.successMsg = 'Successfuly added';
+            setTimeout(() => {
+                this.successMsg = ''
+            }, 5000)
+            this.basketCount = basket.length;
+        }
     }
   },
 

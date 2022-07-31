@@ -1,8 +1,8 @@
 <template>
-  <ion-page class="page_container">
+  <ion-page>
     <folder-page></folder-page>
-    <h1 style="margin-top: 5rem">Hello world</h1>
-    <touch-slider :format-products-by-category="formatProductsByCategory"></touch-slider>
+   
+      <touch-slider class="page_container" :format-products-by-category="formatProductsByCategory"></touch-slider>
   </ion-page>
 </template>
 
@@ -16,7 +16,7 @@ export default {
   name: 'HomePage',
   components: {
     IonPage,
-    TouchSlider
+    TouchSlider,
     // FolderPage,
   },
   data() {
@@ -63,6 +63,9 @@ export default {
   top: 50%;
   transform: translateY(-50%);
 }
+.ion-page {
+  z-index: auto;
+}
 
 #container strong {
   font-size: 20px;
@@ -80,7 +83,7 @@ export default {
   text-decoration: none;
 }
 .page_container {
-  margin-top: 5rem;
-  padding: 2rem;
+  margin-top: 6rem;
+  padding: 0.5rem;
 }
 </style>

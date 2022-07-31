@@ -1,47 +1,79 @@
 <template>
   <ion-page>
     <ion-header :translucent="true">
-      <ion-toolbar style="background-color: red">
-        <ion-buttons slot="start">
-          <ion-menu-button color="primary"></ion-menu-button>
-        </ion-buttons>
-        <ion-title>Golden Shoe</ion-title>
-
+      <ion-toolbar class="toolbar">
+          <ion-item-divider>
+            <ion-buttons slot="start">
+              <ion-menu-button color="dark"></ion-menu-button>
+            </ion-buttons>
+            <ion-header class="company_name">GOLDEN SHOE
+              <fa class="prints" icon="shoe-prints"></fa>
+            </ion-header>
+            <fa :router-link="`/basket`" class="basket" icon="basket-shopping"></fa>
+            <ion-text>
+              <p>{{basketLength}}</p>
+            </ion-text>
+            <fa class="user" icon="user"></fa>
+          </ion-item-divider>
       </ion-toolbar>
     </ion-header>
     
     <ion-content :fullscreen="true">
       <ion-header collapse="condense">
         <ion-toolbar>
-          <!-- <ion-back-button></ion-back-button> -->
           <ion-title size="large">{{ $route.params.id }}</ion-title>
         </ion-toolbar>
       </ion-header>
     </ion-content>
-    <!-- <home-page></home-page>
-    <single-product></single-product> -->
   </ion-page>
 </template>
 
 <script>
 import { defineComponent } from 'vue';
-import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
-// import HomePage from './HomePage'
-// import SingleProduct from './HomePage'
+import { IonButtons, IonContent, IonText, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonItemDivider } from '@ionic/vue';
 
 export default defineComponent({
   name: 'FolderPage',
+  props: ['basketCount'],
   components: {
     IonButtons,
     IonContent,
     IonHeader,
     IonMenuButton,
     IonPage,
+    IonItemDivider,
     IonTitle,
     IonToolbar,
+    IonText
     // HomePage,
     // SingleProduct
+  }, 
+  data() {
+    return {
+     // basketCount: 0,
+    }
+  },
+  computed: {
+    basketLength() {
+      if (!this.basketCount) {
+        let basket = [];
+        basket = JSON.parse(localStorage.getItem('basket')) || [];
+        return basket.length;
+      }
+      return this.basketCount;
+    }
   }
+  // methods: {
+  //   storageListener() {
+  //     //...
+  //   },
+  // },
+  // mounted() {
+  //   document.addEventListener("storage", this.storageListener);
+  // },
+  // beforeDestroy() {
+  //   document.removeEventListener("storage", this.storageListener);
+  // },
 });
 </script>
 
@@ -69,5 +101,40 @@ export default defineComponent({
 
 #container a {
   text-decoration: none;
+}
+
+:host(.ion-color) .button-native {
+  color: black;
+  font-size: 3rem;
+}
+.button-inner {
+  font-size: 2rem;
+  color: black
+}
+.toolbar {
+  background-color: #a00606;
+  display: flex;
+  justify-content: space-between;
+  
+}
+.company_name {
+  opacity: 1;
+  color: goldenrod;
+  font-family: ui-monospace;
+}
+.basket {
+  font-size: 1.5rem;
+  margin-right: 0.2rem;
+  cursor: pointer;
+}
+.user {
+  font-size: 1.5rem;
+  margin-left: 0.5rem;
+}
+.prints {
+  color: gold
+}
+ion-item-divider {
+  background-color: transparent; 
 }
 </style>

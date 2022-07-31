@@ -24,9 +24,26 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import {fas} from '@fortawesome/free-solid-svg-icons'
 library.add(fas);
 
+import { createPinia } from 'pinia'
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
+
+const pinia = createPinia();
+pinia.use(piniaPluginPersistedstate);
+
+
 import FolderPage from './views/FolderPage'
 
-import store from '../src/store/basket'
+// import {useCounterStore} from './store/basket'
+
+// const store = useCounterStore();
+
+// const pinia = createPinia(store);
+
+// import useCounterStore from './store/basket'
+
+// const pinia = createPinia(useCounterStore);
+
+// import store from './store/basket'
 // removeDoubleQuotes(imgUrl) {
 //   return imgUrl.replace(/['"]+/g, '');
 // },
@@ -46,7 +63,9 @@ import './theme/variables.css';
 const app = createApp(App)
   .use(IonicVue)
   .use(router)
-  .use(store)
+  .use(pinia)
+  //.use(store)
+
   .component('fa', FontAwesomeIcon)
 
   app.component('folder-page', FolderPage)

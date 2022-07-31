@@ -1,6 +1,5 @@
 <template>
   <ion-page>
-    <folder-page></folder-page>
     <ion-content v-if="formatProductsByCategory">
       <div v-for="(category) in Object.keys(formatProductsByCategory)" :key="category">
         <h1 class="category_header">{{category.toUpperCase()}}</h1>
@@ -28,7 +27,6 @@
             </section>
           </swiper-slide>
           <swiper-slide  v-for="(product, index) in formatProductsByCategory[category].slice(3, 6)" :key="index">{{product.name}}</swiper-slide>
-          <!-- <swiper-slide>{{category}}</swiper-slide>  -->
         </swiper>
       </div>
     </ion-content>

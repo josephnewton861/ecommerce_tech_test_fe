@@ -1,34 +1,40 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
-// import { RouteRecordRaw } from 'vue-router';
 
 const routes = [
-  // {
-  //   path: '',
-  //   component: () => import ('../views/HomePage.vue')
-  // },
-  // {
-  //   path: '/',
-  //   component: () => import ('../views/FolderPage.vue')
-
-  // },
-
   {
     path: '/',
-    name: 'HomPage',
+    name: 'HomePage',
     component: () => import ('../views/HomePage.vue')
 
   },
+  {
+    path: '/basket',
+    name: 'ProductBasket',
+    component: () => import ('../views/ProductBasket.vue')
+  },
 
+  {
+    path: '/register',
+    name: 'RegisterUser',
+    component: () => import ('../views/RegisterUser.vue')
+  },
+  {
+    path: '/login',
+    name: 'LoginUser',
+    component: () => import ('../views/LoginUser.vue')
+  },
 
-  // {
-  //   path: '/folder/:id',
-  //   component: () => import ('../views/FolderPage.vue')
-  // },
   {
     path: '/product/:category/:slug',
     name: 'SingleProduct',
     component: () => import ('../views/SingleProduct.vue')
-  }
+  },
+  {
+    path: '/orders',
+    name: 'CustomerOrders',
+    component: () => import ('../views/CustomerOrders.vue')
+  },
+
 ]
 
 const router = createRouter({

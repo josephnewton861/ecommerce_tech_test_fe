@@ -113,7 +113,7 @@ http://ionicframework.com/docs/theming/ */
 
     --ion-color-warning: #ffd534;
     --ion-color-warning-rgb: 255,213,52;
-    --ion-color-warning-contrast: #000000;
+    /* --ion-color-warning-contrast: #000000; */
     --ion-color-warning-contrast-rgb: 0,0,0;
     --ion-color-warning-shade: #e0bb2e;
     --ion-color-warning-tint: #ffd948;
@@ -127,14 +127,14 @@ http://ionicframework.com/docs/theming/ */
 
     --ion-color-dark: #f4f5f8;
     --ion-color-dark-rgb: 244,245,248;
-    --ion-color-dark-contrast: #000000;
+    /* --ion-color-dark-contrast: #000000; */
     --ion-color-dark-contrast-rgb: 0,0,0;
     --ion-color-dark-shade: #d7d8da;
     --ion-color-dark-tint: #f5f6f9;
 
     --ion-color-medium: #989aa2;
     --ion-color-medium-rgb: 152,154,162;
-    --ion-color-medium-contrast: #000000;
+    /* --ion-color-medium-contrast: #000000; */
     --ion-color-medium-contrast-rgb: 0,0,0;
     --ion-color-medium-shade: #86888f;
     --ion-color-medium-tint: #a2a4ab;
@@ -181,7 +181,7 @@ http://ionicframework.com/docs/theming/ */
 
     /* --ion-item-background: #000000; */
 
-    --ion-card-background: #1c1c1d;
+    /* --ion-card-background: #1c1c1d; */
   }
 
   .ios ion-modal {
