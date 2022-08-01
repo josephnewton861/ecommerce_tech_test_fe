@@ -2,25 +2,24 @@
     <ion-page>
         <folder-page :basket-count="basketCount"></folder-page>
             <ion-item-divider class="main_container">
-                <ion-label style="color: white">Product</ion-label>
+                <ion-label class="header_label">Product</ion-label>
             </ion-item-divider>   
             <ion-item-group v-if="product">
                 <ion-item>
                     <ion-img :src="removeDoubleQuotes(product.img)"></ion-img>
                 </ion-item>
                 <ion-item class="selected_product_item">
-                    <ion-text>
+                    <ion-text class="right_side_product">
                         <p>{{product.name}}</p>
-                        <p>{{formatDate(product.release_date)}}</p>
-                        <p>{{product.style}}</p>
+                        <p>Release_date: {{formatDate(product.release_date)}}</p>
+                        <p>Style: {{product.style}}</p>
                     </ion-text>
-                    <ion-text>
-                        <p v-if="product.stock_left">Currenly in stock: {{product.stock_left}}</p>
-                        <p v-if="!product.stock_left">Currenly out of stock</p>
-                        <p>£{{product.price}}</p>
-                        <p>{{product.gender}}</p>
+                    <ion-text class="left_side_product">
+                        <p class="align_products_left" v-if="product.stock_left">Stock left: {{product.stock_left}}</p>
+                        <p class="align_products_left" v-if="!product.stock_left">Currenly out of stock</p>
+                        <p class="align_products_left">Price: £{{product.price}}</p>
+                        <p class="align_products_left">Gender: {{product.gender}}</p>
                     </ion-text>
-
                 </ion-item>
                  <ion-item>
                     <ion-label>Available sizes:</ion-label>
@@ -29,27 +28,30 @@
                     </ion-select>
                 </ion-item>
                 <ion-item>
-                        <ion-button v-if="selectedSize" @click="addProductToBasket(product)" >Add to basket</ion-button>
-                        <ion-text v-if="duplicateMsg">{{duplicateMsg}}</ion-text>
-                        <ion-text v-else-if="successMsg">{{successMsg}}</ion-text>
+                        <ion-button :class="{disable_button: !product.stock_left, active_button: product.stock_left}" v-if="selectedSize" @click="product.stock_left ? addProductToBasket(product) : null">Add to basket</ion-button>
+                 </ion-item>
+                 <ion-item v-if="successMsg || duplicateMsg">
+                        <ion-text class="warning_msg" v-if="duplicateMsg">{{duplicateMsg}}</ion-text>
+                        <ion-text class="success_msg" v-else-if="successMsg">{{successMsg}}</ion-text>
                  </ion-item>
             </ion-item-group>
-            <ion-item-divider>
-                <ion-label>Similar products you may like</ion-label>
-            </ion-item-divider>  
-            <ion-item-group class="more_products" v-if="productsByCategory.length">
-                <ion-item>
-                    <ion-img :src="removeDoubleQuotes(productsByCategory[0].img)"></ion-img>
-                    <ion-text>
-
-                    </ion-text>
-                </ion-item>
-                <ion-item>
-                    <ion-text>
-                        <h1>{{productsByCategory[0].name}}</h1>
-                    </ion-text>
-                </ion-item>     
-            </ion-item-group>  
+            <ion-item-divider v-if="productsByCategory.length > 0">
+                <ion-label class="header_label">Similar products you may like</ion-label>
+            </ion-item-divider>
+            <ion-item-group v-if="productsByCategory.length > 0">
+                <ion-item-group v-for="(product, index) in productsByCategory" :key="index">
+                    <ion-item>
+                        <ion-img :src="removeDoubleQuotes(product.img)"></ion-img>
+                    </ion-item>
+                    <ion-item>
+                        <ion-text>
+                            <p>{{productsByCategory[0].name}}</p>
+                            <p>Price: £{{product.price}}</p>
+                        </ion-text>
+                        <ion-button @click="reloadPage(product)" class="left_side_product">See more details</ion-button>
+                    </ion-item>
+                </ion-item-group>  
+            </ion-item-group>
     </ion-page>
 </template>
 
@@ -74,7 +76,7 @@ export default {
     IonImg,
     IonText,
     IonItem,
-    IonSelect
+    IonSelect,
   },
   mounted() {
     this.selectedCategory = this.$route.params.category
@@ -119,6 +121,10 @@ export default {
         let formattedDate = newDate.toLocaleDateString("en", options)
 
         return formattedDate
+    },
+    reloadPage(product) {
+        const path = window.location.origin;
+        return window.location.href = `${path}/product/${product.category}/${product.slug}`
     },
    
     getSimilarProducts() {
@@ -177,6 +183,10 @@ export default {
     .content {
         padding: 2rem;
     }
+    .header_label {
+        color: white;
+        text-transform: uppercase;
+    }
     .product_img {
         margin-top: -3rem;
     }
@@ -184,17 +194,37 @@ export default {
         background-color: #a00606;
         color: white;
     }
+    .header_label {
+        text-transform: uppercase;
+    }
     .ion-page {
         display: block;
+        overflow-y: scroll;
     }
-    .selected_product_item {
-        display: flex;
-        justify-content: space-between; 
-        grid-template-columns: 1fr 1fr;
-        margin-top: -3rem;
+    .left_side_product {
+        margin-left: auto;
     }
-    .more_products {
-        display: flex; 
-        justify-content: space-between;
+    .align_products_left {
+        text-align: right;
+    }
+    .disable_button {
+        opacity: 0.8;
+        cursor: none;
+    }
+    .success_msg {
+        color: green;
+        font-size: 0.9rem
+    }
+    .warning_msg  {
+        color: red;
+        font-size: 0.9rem;
+    }
+    .active_button {
+        margin: 0 auto;
+        width: 100%;
+
+    }
+    .right_side_product {
+        width: 70%;
     }
 </style>

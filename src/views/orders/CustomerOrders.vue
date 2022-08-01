@@ -1,33 +1,32 @@
 <template>
     <ion-page>
         <folder-page></folder-page>
-        <ion-item-divider v-if="!orders.length" class="main_container no_colour">
-            <ion-text class="">
-                <p>No orders present please view our home page to see available products</p>
-            </ion-text>
-        </ion-item-divider>
-        <ion-item-divider v-if="orders.length > 0" class="main_container">
-            <ion-label>
-                Orders
-            </ion-label>
-        </ion-item-divider>
-        <ion-item v-for="(order, index) in orders" :key="index"> 
-            <ion-thumbnail slot="start">
-                <ion-img :src="removeImgQuotes(order.img)"></ion-img>
-            </ion-thumbnail>
-            <ion-text class="thumbnail_container">
-                    <h3>{{order.name}}</h3>
-                    <p>{{order.style}}</p>
-                    <p>{{order.style}}</p>
-                    <p>£{{order.price}}</p>
-            </ion-text>
-            <ion-text>
-                <h3>{{formatOrderDate(order.issue_date)}}</h3>
-                <p v-if="order.delivered_date">{{order.deliveredDate}}</p>
-                <p v-if="order.status === 0">Pending</p>
-                <p v-else>Arrived</p>
-            </ion-text>
-        </ion-item>
+            <ion-item-divider class="main_container header_labels">
+                <ion-label class="header_label">
+                    Orders
+                </ion-label>
+            </ion-item-divider>
+            <ion-item v-if="!orders.length">
+                    <p>No orders present please view our home page to see available products</p>
+            </ion-item>
+            <ion-item-group v-else>
+                <ion-item v-for="(order, index) in orders" :key="index"> 
+                    <ion-thumbnail slot="start">
+                        <ion-img :src="removeDoubleQuotes(order.img)"></ion-img>
+                    </ion-thumbnail>
+                    <ion-text class="thumbnail_container">
+                            <h4>{{order.name}}</h4>
+                            <p>Chosen size: {{order.chosen_size}}</p>
+                            <p>Style: {{order.style}}</p>
+                    </ion-text>
+                    <ion-text class="right_order_side">
+                        <p class="pending" v-if="order.status === 0">Pending</p>
+                        <ion-note>{{formatOrderDate(order.issue_date)}}</ion-note>
+                        <p v-if="order.delivered_date" class="arrived">Arrived</p>
+                        <ion-note v-if="order.delivered_date">{{formatOrderDate(order.delivered_date)}}</ion-note>
+                    </ion-text>
+                </ion-item>
+            </ion-item-group>
     </ion-page>
 </template>
 
@@ -39,7 +38,8 @@ import {
     IonText, 
     IonItem,
     IonThumbnail,
-    IonImg
+    IonImg,
+    IonNote
 } from '@ionic/vue';
 
 import axios from 'axios'
@@ -53,6 +53,7 @@ export default {
         IonItem,
         IonThumbnail,
         IonImg,
+        IonNote
     },
     mounted() {
         this.authenticateUser();
@@ -96,31 +97,37 @@ export default {
 </script>
 
 <style scoped>
-.ion-page {
-    display: block;
-}
-
-.page_container {
-  margin-top: 5rem;
-  padding: 0.5rem;
-}
     .main_container {
         margin-top: 5rem;
-        color: black;
+        color: white;
     }
-ion-item-divider {
-    background-color: #a00606;
-  }
-  .no_colour {
-      background-color: transparent
-  }
-
-  
-  .ion-label {
-      color: white;
-  }
-  .thumbnail_container {
-      display: flex; 
-      justify-content: space-between
-  }
+    .ion-page {
+        display: block;
+        overflow-y: scroll;
+    }
+    .header_labels {
+        background-color: #a00606;
+        color: white;
+    }
+    :host {
+        min-height: 0px;
+    }
+    .header_label {
+        text-transform: uppercase;
+        font-size: 1.2rem;
+        padding: 0.2rem
+    }
+    p {
+        margin-top: 0.2rem;
+        margin-bottom: 0.2rem;
+    }
+    .right_order_side {
+        margin-left: auto
+    }
+    .pending {
+        color: #a00606
+    }
+    .arrived {
+        color: green
+    }
 </style>

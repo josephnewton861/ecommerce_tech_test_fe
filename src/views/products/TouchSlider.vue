@@ -20,63 +20,55 @@
             </ion-select>
           </ion-item>
       </ion-list>
-      <div v-if="selectedCategory === 'All'">
+      <ion-item-group v-if="selectedCategory === 'All'">
         <div v-for="(category) in Object.keys(formatProductsByCategory)" :key="category">
           <ion-item-divider>
             <ion-label>{{category.toUpperCase()}}</ion-label>
           </ion-item-divider>
           <swiper>
             <swiper-slide v-for="(product, index) in formatProductsByCategory[category]" :key="index">
-              <section class="product_card">
+              <ion-item>
                 <ion-img class="product_img" :src="removeDoubleQuotes(product.img)"></ion-img>
                 <div class="swiper_container">
                   <div>
+                    <h4>{{product.name}}</h4>
                     <p>{{formatDate(product.release_date)}}</p>
-                    <h3>{{product.name}}</h3>
                     <p>{{product.style}}</p>
                   </div>
-                  <div style="display: grid; grid-template-columns: 1fr 1fr;">
+                  <div>
                     <div>
-                      <h3>Retail</h3>
-                      <p>{{`£${product.price}`}}</p>
+                      <p>Retail: {{`£${product.price}`}}</p>
+                      <ion-button :router-link="`/product/${product.category}/${product.slug}`">See more details</ion-button>
                     </div>
                     <div>
-                      <ion-button :router-link="`/product/${product.category}/${product.slug}`">See more</ion-button>
                     </div>
                   </div>
                 </div>
-              </section>
+              </ion-item>
             </swiper-slide>
             <swiper-slide  v-for="(product, index) in formatProductsByCategory[category]" :key="index">{{product.name}}</swiper-slide>
           </swiper>
         </div>
-      </div>
-      <div v-else>
+      </ion-item-group>
+      <ion-item-group v-else>
         <ion-item-divider>
             <ion-label>{{selectedCategory.toUpperCase()}}</ion-label>
         </ion-item-divider>
-        <div v-for="product in individualCategoryData" :key="product">
-          <section class="product_card">
+        <ion-item-group v-for="product in individualCategoryData" :key="product">
+          <ion-item class="product_card">
                 <ion-img class="product_img" :src="removeDoubleQuotes(product.img)"></ion-img>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; ">
+                <div class="product_content">
                   <div>
+                    <h4>{{product.name}}</h4>
                     <p>{{formatDate(product.release_date)}}</p>
-                    <h3>{{product.name}}</h3>
                     <p>{{product.style}}</p>
-                  </div>
-                  <div style="display: grid; grid-template-columns: 1fr 1fr;">
-                    <div>
-                      <h3>Retail</h3>
-                      <p>{{`£${product.price}`}}</p>
-                    </div>
-                    <div>
-                      <ion-button :router-link="`/product/${product.category}/${product.slug}`">See more</ion-button>
-                    </div>
+                    <p>Retail {{`£${product.price}`}}</p>
+                    <ion-button :router-link="`/product/${product.category}/${product.slug}`">See more</ion-button>
                   </div>
                 </div>
-              </section>
-        </div>
-      </div>
+          </ion-item>
+        </ion-item-group>
+      </ion-item-group>
     </ion-content>
   </ion-page>
 </template>
@@ -91,7 +83,8 @@
   IonLabel,
   IonItem,
   IonList,
-  IonSelectOption
+  IonSelectOption,
+  IonItemGroup
   } from '@ionic/vue';
   import axios from 'axios'
   import 'swiper/css';
@@ -108,7 +101,8 @@
       IonImg,
       IonItem,
       IonList,
-      IonSelectOption
+      IonSelectOption,
+      IonItemGroup
     },
     data() {
       return {
@@ -160,9 +154,6 @@
   ion-page {
     display: block;
   }
-  .product_card {
-    
-  }
   .category_buttons {
     display: flex;
     overflow-x: scroll;
@@ -190,8 +181,12 @@
     display: flex; 
     margin-bottom: 1rem;
   }
+  .product_content {
+    width: 50%;
+  }
   .swipper_container {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    width: 50%;
   }
 </style>

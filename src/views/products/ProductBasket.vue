@@ -1,30 +1,41 @@
 <template>
     <ion-page>
         <folder-page :basket-count="basketCount"></folder-page>
-            <ion-item-divider class="main_container">
-                <ion-label>
-                    Shopping cart:
+            <ion-item-divider class="main_container header_labels">
+                <ion-label class="header_label">
+                    Shopping cart
                 </ion-label>
             </ion-item-divider>
             <ion-item v-if="!basketCount">
                 <p>No Items in basket please return to the products page to add products</p>
+            </ion-item>
+            <ion-item v-if="userInfo">
+                <ion-text>
+                    <h4>Delivery Information</h4>
+                    <p>Address: {{userInfo.address}}</p>
+                    <p>Postcode: {{userInfo.postcode}}</p>
+                </ion-text>
             </ion-item>
             <ion-item v-for="(product, index) in productsInBasket" :key="index"> 
                 <ion-thumbnail slot="start">
                     <ion-img :src="removeDoubleQuotes(product.img)"></ion-img>
                 </ion-thumbnail>
                 <ion-text class="thumbnail_container">
-                        <h3>{{product.name}}</h3>
-                        <p>{{product.name}}</p>
+                        <h4>{{product.name}}</h4>
+                        <p>Chosen size: {{product.chosenSize}}</p>
+                        <p>Style: {{product.style}}</p>
+                        <p>Price: £{{product.price}}</p>
                 </ion-text>
                 <ion-button @click="removeBasketItem(index)" color="danger" slot="end"><fa icon="times"></fa></ion-button>
             </ion-item>
-            <ion-button router-link="/register" v-if="basketTotal" @click="addOrder()">Checkout £{{basketTotal}}</ion-button>
+            <ion-item-divider class="button_divider">
+                <ion-button class="checkout_button" router-link="/register" v-if="basketTotal" @click="addOrder()">Checkout £{{basketTotal}}</ion-button>
+            </ion-item-divider>
             <ion-alert
                 :is-open="alert"
+                class="ionic_alert"
                 header="Alert"
-                sub-header="Important message"
-                message="This is an alert!"
+                message="Order Confirmed"
                 :buttons="['OK']"
                 @didDismiss="setOpen(false)"
             ></ion-alert>
@@ -98,6 +109,7 @@ export default {
             let basket = JSON.parse(localStorage.getItem('basket'));
             basket.splice(index, 1)
             this.productsInBasket = basket;
+            this.basketCount = basket.length;
             localStorage.setItem('basket', JSON.stringify(basket));
         },
         addOrder() {
@@ -148,20 +160,38 @@ export default {
 <style scoped>
     .main_container {
         margin-top: 5rem;
-        color: black;
+        color: white;
     }
     .ion-page {
         display: block;
     }
-    ion-item-divider {
+    .header_labels {
         background-color: #a00606;
-        color: white
+        color: white;
+    }
+    .button_divider {
+        background-color: transparent;
     }
     :host {
         min-height: 0px;
     }
-    .thumbnail_container {
-        display: flex; 
-        justify-content: space-between;
+    .header_label {
+        text-transform: uppercase;
+        font-size: 1.2rem;
+        padding: 0.2rem
+    }
+    p {
+        margin-top: 0.2rem;
+        margin-bottom: 0.2rem;
+    }
+    .checkout_button {
+        font-size: 0.9rem;
+        padding: 0.2rem;
+        margin-top: 1rem;
+        margin: 0 auto;
+        width: 80%;
+    }
+    .ionic_alert .alert_wrapper {
+        --background: white;
     }
 </style>

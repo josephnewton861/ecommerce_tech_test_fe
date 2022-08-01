@@ -5,7 +5,7 @@
         <ion-content>
           <ion-list id="inbox-list">
             <ion-list-header>Golden Shoe</ion-list-header>
-            <ion-note>Hi joetest123.com</ion-note>
+            <ion-note class="signed_in_note">Hi joetest123.com</ion-note>
             <ion-menu-toggle auto-hide="false" v-for="(p, i) in appPages" :key="i">
               <ion-item @click="selectedIndex = i" router-direction="root" :router-link="p.url" lines="none" detail="false" class="hydrated" :class="{ selected: selectedIndex === i }">
                 <ion-icon slot="start" :ios="p.iosIcon" :md="p.mdIcon"></ion-icon>
@@ -21,9 +21,32 @@
 </template>
 
 <script>
-import { IonApp, IonContent, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonMenu, IonMenuToggle, IonNote, IonRouterOutlet, IonSplitPane } from '@ionic/vue';
+import { 
+  IonApp, 
+  IonContent, 
+  IonIcon, 
+  IonItem, 
+  IonLabel, 
+  IonList, 
+  IonListHeader, 
+  IonMenu, 
+  IonMenuToggle, 
+  IonNote, 
+  IonRouterOutlet,
+  IonSplitPane 
+} from '@ionic/vue';
 import { defineComponent, ref} from 'vue';
-import { archiveOutline, archiveSharp, bookmarkOutline, bookmarkSharp, heartOutline, heartSharp, mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, trashOutline, trashSharp, warningOutline, warningSharp } from 'ionicons/icons';
+import { 
+  warningOutline, 
+  warningSharp ,
+  home,
+  informationCircle,
+  cube,
+  call,
+  basket,
+  logIn,
+  people
+  } from 'ionicons/icons';
 
 
 export default defineComponent({
@@ -35,12 +58,12 @@ export default defineComponent({
     IonItem, 
     IonLabel, 
     IonList, 
-    IonListHeader, 
     IonMenu, 
     IonMenuToggle, 
     IonNote, 
     IonRouterOutlet, 
     IonSplitPane,
+    IonListHeader
   },
 
   setup() {
@@ -49,44 +72,44 @@ export default defineComponent({
       {
         title: 'Home',
         url: '/',
-        iosIcon: mailOutline,
-        mdIcon: mailSharp
-      },
-      {
-        title: 'About',
-        url: '/about',
-        iosIcon: paperPlaneOutline,
-        mdIcon: paperPlaneSharp
+        iosIcon: home,
+        mdIcon: home
       },
       {
         title: 'Orders',
         url: '/orders',
-        iosIcon: heartOutline,
-        mdIcon: heartSharp
-      },
-      {
-        title: 'Contact',
-        url: '/contact',
-        iosIcon: archiveOutline,
-        mdIcon: archiveSharp
+        iosIcon: cube,
+        mdIcon: cube
       },
       {
         title: 'Basket',
         url: '/basket',
-        iosIcon: archiveOutline,
-        mdIcon: archiveSharp
+        iosIcon: basket,
+        mdIcon: basket
+      },
+      {
+        title: 'Contact',
+        url: '/contact',
+        iosIcon: call,
+        mdIcon: call
+      },
+      {
+        title: 'About',
+        url: '/about',
+        iosIcon: informationCircle,
+        mdIcon: informationCircle
       },
       {
         title: 'Register',
         url: '/register',
-        iosIcon: archiveOutline,
-        mdIcon: archiveSharp
+        iosIcon: people,
+        mdIcon: people
       },
        {
         title: 'Login',
         url: '/login',
-        iosIcon: archiveOutline,
-        mdIcon: archiveSharp
+        iosIcon: logIn,
+        mdIcon: logIn
       },
 
     ];
@@ -99,20 +122,15 @@ export default defineComponent({
     return { 
       selectedIndex,
       appPages, 
-      archiveOutline, 
-      archiveSharp, 
-      bookmarkOutline, 
-      bookmarkSharp, 
-      heartOutline, 
-      heartSharp, 
-      mailOutline, 
-      mailSharp, 
-      paperPlaneOutline, 
-      paperPlaneSharp, 
-      trashOutline, 
-      trashSharp, 
       warningOutline, 
-      warningSharp,
+      warningSharp ,
+      home,
+      informationCircle,
+      cube,
+      call,
+      basket,
+      logIn,
+      people
     }
   },
 });
@@ -129,6 +147,13 @@ export default defineComponent({
   }
   ion-label {
     color: white;
+  }
+  ion-list-header {
+    text-transform: uppercase;
+    color: black
+  }
+  .signed_in_note {
+    margin-left: 1.2rem;
   }
 </style> 
 
