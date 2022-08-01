@@ -1,7 +1,5 @@
 <template>
   <ion-app>
-    <!-- <home-page></home-page> -->
-    <!-- <folder-page></folder-page> -->
     <ion-split-pane content-id="main-content">
       <ion-menu content-id="main-content" type="overlay">
         <ion-content>
@@ -25,7 +23,6 @@
 <script>
 import { IonApp, IonContent, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonMenu, IonMenuToggle, IonNote, IonRouterOutlet, IonSplitPane } from '@ionic/vue';
 import { defineComponent, ref} from 'vue';
-//import { useRoute } from 'vue-router';
 import { archiveOutline, archiveSharp, bookmarkOutline, bookmarkSharp, heartOutline, heartSharp, mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, trashOutline, trashSharp, warningOutline, warningSharp } from 'ionicons/icons';
 
 
@@ -93,16 +90,12 @@ export default defineComponent({
       },
 
     ];
-   // const labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
     
     const path = window.location.pathname;
-    // console.log(path, 'path')
     if (path !== undefined) {
       selectedIndex.value = appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
     }
-    
-    //const route = useRoute();
-    
+      
     return { 
       selectedIndex,
       appPages, 
@@ -120,12 +113,11 @@ export default defineComponent({
       trashSharp, 
       warningOutline, 
       warningSharp,
-      //isSelected: (url: string) => url === route.path ? 'selected' : ''
     }
   },
 });
 </script>
-<style scoped>
+<style>
   ion-page {
     display: block; 
   }
@@ -135,12 +127,9 @@ export default defineComponent({
   ion-item {
     background-color: '#a00606' 
   }
-/* :host {
-  background-color: transparent;
-  color: black;
-  --padding-start: 10px;
-  --inner-padding-end: 10px;
-} */
+  ion-label {
+    color: white;
+  }
 </style> 
 
 

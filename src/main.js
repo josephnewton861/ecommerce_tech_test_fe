@@ -24,38 +24,13 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import {fas} from '@fortawesome/free-solid-svg-icons'
 library.add(fas);
 
-import { createPinia } from 'pinia'
-import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
-
-const pinia = createPinia();
-pinia.use(piniaPluginPersistedstate);
-
+import store from './store/basket'
 
 import FolderPage from './views/FolderPage'
 
-// import {useCounterStore} from './store/basket'
+import authMixin from './mixins/authMixin'
+import generalMixin from './mixins/generalMixin'
 
-// const store = useCounterStore();
-
-// const pinia = createPinia(store);
-
-// import useCounterStore from './store/basket'
-
-// const pinia = createPinia(useCounterStore);
-
-// import store from './store/basket'
-// removeDoubleQuotes(imgUrl) {
-//   return imgUrl.replace(/['"]+/g, '');
-// },
-// cosnt formatDate = (date) => {
-//      let month = date.getMonth() + 1;
-//       if (month < 10) {
-//           month = `0${month}`
-//       }
-//       let year = date.getFullYear()
-//       let newDate = date.getDate();
-//       return `${year}-${month}-${newDate}`
-// }
 
 /* Theme variables */
 import './theme/variables.css';
@@ -63,12 +38,13 @@ import './theme/variables.css';
 const app = createApp(App)
   .use(IonicVue)
   .use(router)
-  .use(pinia)
-  //.use(store)
+  .use(store)
+  .mixin(authMixin)
+  .mixin(generalMixin)
 
   .component('fa', FontAwesomeIcon)
 
   app.component('folder-page', FolderPage)
-router.isReady().then(() => {
+  router.isReady().then(() => {
   app.mount('#app');
 });

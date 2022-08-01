@@ -45,14 +45,7 @@ export default defineComponent({
     IonTitle,
     IonToolbar,
     IonText
-    // HomePage,
-    // SingleProduct
   }, 
-  data() {
-    return {
-     // basketCount: 0,
-    }
-  },
   computed: {
     basketLength() {
       if (!this.basketCount) {
@@ -63,17 +56,6 @@ export default defineComponent({
       return this.basketCount;
     }
   }
-  // methods: {
-  //   storageListener() {
-  //     //...
-  //   },
-  // },
-  // mounted() {
-  //   document.addEventListener("storage", this.storageListener);
-  // },
-  // beforeDestroy() {
-  //   document.removeEventListener("storage", this.storageListener);
-  // },
 });
 </script>
 

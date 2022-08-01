@@ -1,23 +1,20 @@
 <template>
   <ion-page>
     <folder-page></folder-page>
-   
       <touch-slider class="page_container" :format-products-by-category="formatProductsByCategory"></touch-slider>
   </ion-page>
 </template>
 
 <script>
 import { IonPage } from '@ionic/vue';
-import TouchSlider from './TouchSlider'
-// import FolderPage from '../views/FolderPage'
+import TouchSlider from './products/TouchSlider';
 import axios from "axios";
 
 export default {
   name: 'HomePage',
   components: {
     IonPage,
-    TouchSlider,
-    // FolderPage,
+    TouchSlider,    
   },
   data() {
     return {
@@ -83,7 +80,7 @@ export default {
   text-decoration: none;
 }
 .page_container {
-  margin-top: 6rem;
+  margin-top: 5rem;
   padding: 0.5rem;
 }
 </style>

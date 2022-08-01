@@ -2,26 +2,32 @@
     <ion-page>
         <folder-page :basket-count="basketCount"></folder-page>
             <ion-item-divider class="main_container">
-                <ion-text v-if="!productsInBasket.length">
-                    <p>No Items in basket</p>
-                </ion-text>
-            </ion-item-divider>
-            <ion-item-divider>
                 <ion-label>
-                    Shooping cart:
+                    Shopping cart:
                 </ion-label>
             </ion-item-divider>
+            <ion-item v-if="!basketCount">
+                <p>No Items in basket please return to the products page to add products</p>
+            </ion-item>
             <ion-item v-for="(product, index) in productsInBasket" :key="index"> 
                 <ion-thumbnail slot="start">
                     <ion-img :src="removeDoubleQuotes(product.img)"></ion-img>
                 </ion-thumbnail>
-                <ion-text style="display: flex; justify-content: space-between;">
+                <ion-text class="thumbnail_container">
                         <h3>{{product.name}}</h3>
                         <p>{{product.name}}</p>
                 </ion-text>
                 <ion-button @click="removeBasketItem(index)" color="danger" slot="end"><fa icon="times"></fa></ion-button>
             </ion-item>
-            <ion-button router-link="/register" v-if="basketTotal">Checkout £{{basketTotal}}</ion-button>
+            <ion-button router-link="/register" v-if="basketTotal" @click="addOrder()">Checkout £{{basketTotal}}</ion-button>
+            <ion-alert
+                :is-open="alert"
+                header="Alert"
+                sub-header="Important message"
+                message="This is an alert!"
+                :buttons="['OK']"
+                @didDismiss="setOpen(false)"
+            ></ion-alert>
     </ion-page>
 </template>
 
@@ -33,8 +39,11 @@ import {
     IonText, 
     IonItem,
     IonThumbnail,
-    IonImg
+    IonImg,
+    IonAlert
 } from '@ionic/vue';
+
+import axios from 'axios';
 
 export default {
     name: 'ProductBasket',
@@ -45,26 +54,34 @@ export default {
         IonItem,
         IonThumbnail,
         IonImg,
+        IonAlert
     },
 
     data() {
         return {
             productsInBasket: [],
             basketCount: null,
-            user: false,
+            userInfo: null,
+            errMsg: null,
+            alert: false,
         }
     },
     mounted() {
-        let basket = JSON.parse(localStorage.getItem('basket'));
+        this.authenticateUser();
+        let basket = JSON.parse(localStorage.getItem('basket')) || 0;
         this.productsInBasket = basket
-        // this.productsInBasket = basket;
         this.basketCount = basket.length;
-        // this.productsInBasket = this.$store.state.basket;
-    //    this.productsInBasket = this.$store._getters['getBasket'][0];
     },
     methods: {
         removeDoubleQuotes(imgUrl) {
             return imgUrl.replace(/['"]+/g, '');
+        },
+        authenticateUser() {
+            this.checkUserInformation().then((res) => {
+                this.userInfo = res[0];
+            }).catch((err) => {
+                console.log(err)
+            });
         },
         formatDate(date) {
             let newDate = new Date(date);
@@ -78,17 +95,36 @@ export default {
             return formattedDate
         },
         removeBasketItem(index) {
-            console.log(index);
             let basket = JSON.parse(localStorage.getItem('basket'));
             basket.splice(index, 1)
             this.productsInBasket = basket;
             localStorage.setItem('basket', JSON.stringify(basket));
+        },
+        addOrder() {
+            let basket = JSON.parse(localStorage.getItem('basket'));
 
+            let productIds = []
+            let sizes = []
 
-            // console.log(product, 'hereeeeee')
-            // let index = productsInBasket.findIndex((obj) => {
-            //     if
-            // }
+            basket.forEach((product) => {
+                productIds.push(product.id)
+                sizes.push(product.chosenSize)
+            })
+
+            axios.post(`https://ecommerce-application-joen.herokuapp.com/api/orders/${this.userInfo.id}`, {
+                product_ids: productIds,
+                sizes: sizes
+            }).then(() => {
+                this.productsInBasket = [];
+                this.basketCount = 0;
+                localStorage.clear()
+                this.alert = true;
+                setTimeout(() => {
+                    this.alert = false;
+                }, 5000)
+            }).catch((err) => {
+                this.errMsg = err.msg;
+            })
         }
     },
     computed: {
@@ -116,5 +152,16 @@ export default {
     }
     .ion-page {
         display: block;
+    }
+    ion-item-divider {
+        background-color: #a00606;
+        color: white
+    }
+    :host {
+        min-height: 0px;
+    }
+    .thumbnail_container {
+        display: flex; 
+        justify-content: space-between;
     }
 </style>

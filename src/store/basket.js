@@ -1,20 +1,23 @@
-        //console.log(basketStore.basket, product, 'here')
-import { defineStore } from 'pinia'
+import {createStore} from 'vuex';
 
- export const useCounterStore = defineStore({
-    id: 'counter',
-    state: () => {
-        return { count: 0 }
+const store = createStore({
+    state() {
+        return {
+            basket: [],
+        }
     },
-    // could also be defined as
-    // state: () => ({ count: 0 })
-    actions: {
-        increment() {
-            this.count++
-        },
+    getters: {
+        basket(state) {
+            return state.basket
+        }
     },
-})
+    mutations: {
+        addProductToStoreBasket (state, selectedProduct) {
+            selectedProduct.product.chosenSize = selectedProduct.size;
+            return state.basket.push(selectedProduct.product);
+        }
+    }
+});
 
-
-//export default useCounterStore
+export default store;
 

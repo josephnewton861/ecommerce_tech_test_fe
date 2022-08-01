@@ -16,7 +16,6 @@ export default {
   components: {
     IonPage,
     IonHeader
-    // FolderPage,
   },
   data() {
     return {

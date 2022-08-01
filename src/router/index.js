@@ -10,29 +10,29 @@ const routes = [
   {
     path: '/basket',
     name: 'ProductBasket',
-    component: () => import ('../views/ProductBasket.vue')
+    component: () => import ('../views/products/ProductBasket.vue')
   },
 
   {
     path: '/register',
     name: 'RegisterUser',
-    component: () => import ('../views/RegisterUser.vue')
+    component: () => import ('../views/customer/RegisterUser.vue')
   },
   {
     path: '/login',
     name: 'LoginUser',
-    component: () => import ('../views/LoginUser.vue')
+    component: () => import ('../views/customer/LoginUser.vue')
   },
 
   {
     path: '/product/:category/:slug',
     name: 'SingleProduct',
-    component: () => import ('../views/SingleProduct.vue')
+    component: () => import ('../views/products/SingleProduct.vue')
   },
   {
     path: '/orders',
     name: 'CustomerOrders',
-    component: () => import ('../views/CustomerOrders.vue')
+    component: () => import ('../views/orders/CustomerOrders.vue')
   },
 
 ]
