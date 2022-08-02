@@ -16,7 +16,7 @@
                     </ion-text>
                     <ion-text class="left_side_product">
                         <p class="align_products_left" v-if="product.stock_left">Stock left: {{product.stock_left}}</p>
-                        <p class="align_products_left" v-if="!product.stock_left">Currenly out of stock</p>
+                        <p class="align_products_left" v-if="!product.stock_left">Currently out of stock</p>
                         <p class="align_products_left">Price: £{{product.price}}</p>
                         <p class="align_products_left">Gender: {{product.gender}}</p>
                     </ion-text>
