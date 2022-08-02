@@ -127,6 +127,7 @@ export default {
                 product_ids: productIds,
                 sizes: sizes
             }).then(() => {
+                this.updateStockLeft(productIds);
                 this.productsInBasket = [];
                 this.basketCount = 0;
                 localStorage.clear()
@@ -136,6 +137,15 @@ export default {
                 }, 5000)
             }).catch((err) => {
                 this.errMsg = err.msg;
+            })
+        },
+        updateStockLeft(productIds) {
+            axios.patch(`https://ecommerce-application-joen.herokuapp.com/api/products`, {
+                product_ids: productIds
+            }).then(() => {
+
+            }).catch((err) => {
+                console.log(err)
             })
         }
     },
