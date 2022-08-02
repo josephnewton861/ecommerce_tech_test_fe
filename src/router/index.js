@@ -23,6 +23,11 @@ const routes = [
     name: 'LoginUser',
     component: () => import ('../views/customer/LoginUser.vue')
   },
+  {
+    path: '/contact',
+    name: 'ContactPoint',
+    component: () => import ('../views/ContactPoint.vue')
+  },
 
   {
     path: '/product/:category/:slug',
